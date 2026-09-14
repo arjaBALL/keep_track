@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, ChevronDown } from "lucide-react";
 import { navItems } from "../data/navItems";
 import NavIcon from "../components/ui/NavIcons";
 import { router } from "@inertiajs/react";
@@ -7,6 +7,16 @@ import { router } from "@inertiajs/react";
 export default function Sidebar() {
     const [collapsed, setCollapsed] = useState(false);
     const [active, setActive] = useState("Dashboard");
+    const [openMenus, setOpenMenus] = useState({
+        "Data Management": false,
+    });
+
+    const toggleSubmenu = (label) => {
+        setOpenMenus((prev) => ({
+            ...prev,
+            [label]: !prev[label],
+        }));
+    };
 
     return (
         <div className="relative flex-shrink-0">
@@ -15,10 +25,12 @@ export default function Sidebar() {
                     collapsed ? "w-16" : "w-60"
                 }`}
             >
+                {/* Header */}
                 <div className="flex items-center min-h-[64px] px-3 gap-3">
                     <div className="w-8 h-8 min-w-[32px] bg-indigo-500 rounded-lg flex items-center justify-center text-white font-semibold text-sm flex-shrink-0">
                         T
                     </div>
+
                     <div
                         className={`overflow-hidden whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
                             collapsed
@@ -27,10 +39,10 @@ export default function Sidebar() {
                         }`}
                     >
                         <p className="text-sm font-semibold text-indigo-900 m-0">
-                            AquaTrip
+                            Keep It Track
                         </p>
                         <p className="text-[10px] uppercase tracking-widest text-indigo-400 m-0">
-                            Trip ticket Management
+                            Inventory Management
                         </p>
                     </div>
                 </div>
@@ -53,58 +65,136 @@ export default function Sidebar() {
                                 {section}
                             </p>
 
-                            {items.map((item) => (
-                                <button
-                                    key={item.label}
-                                    onClick={() => {
-                                        setActive(item.label);
-                                        router.visit(item.href);
-                                    }}
-                                    className={`w-full flex items-center rounded-md text-sm font-semibold transition-colors mb-2 px-2 py-2 ${
-                                        collapsed
-                                            ? "justify-center rounded-sm"
-                                            : "justify-start gap-3 rounded-md"
-                                    } ${
-                                        active === item.label
-                                            ? "bg-white text-indigo-700 shadow-sm"
-                                            : "text-indigo-800 hover:bg-indigo-100"
-                                    }`}
-                                >
-                                    <span className="min-w-[20px] flex-shrink-0 flex items-center justify-center">
-                                        <NavIcon name={item.icon} />
-                                    </span>
+                            {items.map((item) => {
+                                const hasChildren =
+                                    item.children && item.children.length > 0;
 
-                                    <span
-                                        className={`flex-1 text-left whitespace-nowrap overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
-                                            collapsed
-                                                ? "max-w-0 opacity-0"
-                                                : "max-w-[160px] opacity-100"
-                                        }`}
-                                    >
-                                        {item.label}
-                                    </span>
+                                const isOpen = openMenus[item.label];
 
-                                    {item.badge && (
-                                        <span
-                                            className={`bg-indigo-500 text-white text-[10px] rounded-full flex-shrink-0 overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                                return (
+                                    <div key={item.label}>
+                                        {/* Parent menu or regular menu */}
+                                        <button
+                                            onClick={() => {
+                                                if (hasChildren) {
+                                                    toggleSubmenu(item.label);
+                                                } else {
+                                                    setActive(item.label);
+                                                    router.visit(item.href);
+                                                }
+                                            }}
+                                            className={`w-full flex items-center rounded-md text-sm font-semibold transition-colors mb-2 px-2 py-2 ${
                                                 collapsed
-                                                    ? "max-w-0 opacity-0 px-0 py-0"
-                                                    : "max-w-[40px] opacity-100 px-1.5 py-0.5"
+                                                    ? "justify-center rounded-sm"
+                                                    : "justify-start gap-3 rounded-md"
+                                            } ${
+                                                active === item.label
+                                                    ? "bg-white text-indigo-700 shadow-sm"
+                                                    : "text-indigo-800 hover:bg-indigo-100"
                                             }`}
                                         >
-                                            {item.badge}
-                                        </span>
-                                    )}
-                                </button>
-                            ))}
+                                            <span className="min-w-[20px] flex-shrink-0 flex items-center justify-center">
+                                                <NavIcon name={item.icon} />
+                                            </span>
+
+                                            <span
+                                                className={`flex-1 text-left whitespace-nowrap overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                                                    collapsed
+                                                        ? "max-w-0 opacity-0"
+                                                        : "max-w-[160px] opacity-100"
+                                                }`}
+                                            >
+                                                {item.label}
+                                            </span>
+
+                                            {item.badge && (
+                                                <span
+                                                    className={`bg-indigo-500 text-white text-[10px] rounded-full flex-shrink-0 overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                                                        collapsed
+                                                            ? "max-w-0 opacity-0 px-0 py-0"
+                                                            : "max-w-[40px] opacity-100 px-1.5 py-0.5"
+                                                    }`}
+                                                >
+                                                    {item.badge}
+                                                </span>
+                                            )}
+
+                                            {/* Submenu chevron */}
+                                            {hasChildren && !collapsed && (
+                                                <ChevronDown
+                                                    size={16}
+                                                    className={`text-indigo-400 transition-transform duration-300 ${
+                                                        isOpen
+                                                            ? "rotate-180"
+                                                            : ""
+                                                    }`}
+                                                />
+                                            )}
+                                        </button>
+
+                                        {/* Submenu */}
+                                        {hasChildren && (
+                                            <div
+                                                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                                                    isOpen && !collapsed
+                                                        ? "max-h-125 opacity-100"
+                                                        : "max-h-0 opacity-0"
+                                                }`}
+                                            >
+                                                <div className="ml-5 pl-4 border-l border-indigo-200 space-y-1 mb-2">
+                                                    {item.children.map(
+                                                        (child) => (
+                                                            <button
+                                                                key={
+                                                                    child.label
+                                                                }
+                                                                onClick={() => {
+                                                                    setActive(
+                                                                        child.label,
+                                                                    );
+                                                                    router.visit(
+                                                                        child.href,
+                                                                    );
+                                                                }}
+                                                                className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                                                                    active ===
+                                                                    child.label
+                                                                        ? "bg-white text-indigo-700 shadow-sm"
+                                                                        : "text-indigo-700 hover:bg-indigo-100"
+                                                                }`}
+                                                            >
+                                                                <span className="min-w-[18px] flex items-center justify-center">
+                                                                    <NavIcon
+                                                                        name={
+                                                                            child.icon
+                                                                        }
+                                                                    />
+                                                                </span>
+
+                                                                <span className="whitespace-nowrap">
+                                                                    {
+                                                                        child.label
+                                                                    }
+                                                                </span>
+                                                            </button>
+                                                        ),
+                                                    )}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
                         </div>
                     ))}
                 </nav>
+
                 {/* User */}
                 <div className="flex items-center gap-3 p-4 border-t border-indigo-200 overflow-hidden mt-auto">
                     <div className="w-8 h-8 min-w-[32px] bg-indigo-500 rounded-full flex items-center justify-center text-white text-xs font-medium">
                         JD
                     </div>
+
                     <div
                         className={`overflow-hidden whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
                             collapsed
@@ -120,7 +210,7 @@ export default function Sidebar() {
                 </div>
             </aside>
 
-            {/* Toggle — lives on the wrapper, not the aside, so overflow-hidden doesn't clip it */}
+            {/* Toggle */}
             <button
                 onClick={() => setCollapsed(!collapsed)}
                 className="absolute top-13 -right-3 -translate-y-1/2 w-7 h-7 bg-white border-3 border-indigo-600 rounded-full flex items-center justify-center shadow-sm hover:bg-indigo-100 transition-colors z-10"
@@ -128,7 +218,9 @@ export default function Sidebar() {
             >
                 <ChevronLeft
                     size={16}
-                    className={`text-indigo-600 transition-transform duration-300 ${collapsed ? "rotate-180" : ""}`}
+                    className={`text-indigo-600 transition-transform duration-300 ${
+                        collapsed ? "rotate-180" : ""
+                    }`}
                 />
             </button>
         </div>

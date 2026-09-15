@@ -18,7 +18,8 @@ class FundResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'table' => $this->table,
+            'id' => $this->id,
+            'fund_name' => $this->fund_name,
         ];
     }
 }

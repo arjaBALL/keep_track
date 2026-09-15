@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 class AccountCode extends Model
@@ -22,7 +23,13 @@ class AccountCode extends Model
      
     ];
 
-
+    public function fundClassifications(): HasMany
+    {
+        return $this->hasMany(
+           FundClassification::class,
+            'account_id'
+        );
+    }
 
 
 }

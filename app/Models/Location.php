@@ -23,12 +23,12 @@ class Location extends Model
     ];
 
 
-    public function locationConditions(): HasMany
-{
-    return $this->hasMany(
-        LocationCondition::class,
-        'location_id'
-    );
-}
+    public function locationCondition(): HasMany
+        {
+            return $this->hasMany(
+                LocationCondition::class,
+                'location_id'
+            );
+        }
 
 }

@@ -12,13 +12,13 @@ return new class extends Migration
     {
         Schema::create('inventory_registrations', function (Blueprint $table) {
             $table->id();
-            $table->integer('classification_id');
-            $table->integer('identification_id');
-            $table->integer('description_id');
-            $table->integer('valuation_id');
-            $table->integer('accountability_id');
-            $table->integer('location_id');
-            $table->integer('status_id');
+            $table->integer('classification_id')->nullable();
+            $table->integer('identification_id')->nullable();
+            $table->integer('description_id')->nullable();
+            $table->integer('valuation_id')->nullable();
+            $table->integer('accountability_id')->nullable();
+            $table->integer('location_id')->nullable();
+            $table->integer('status_id')->nullable();
         });
     }
 

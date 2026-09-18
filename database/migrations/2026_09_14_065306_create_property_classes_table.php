@@ -12,7 +12,7 @@ return new class extends Migration
     {
         Schema::create('property_classes', function (Blueprint $table) {
             $table->id();
-            $table->string('property_type_name');           
+            $table->string('property_class_name')->nullable();           
         });
     }
 

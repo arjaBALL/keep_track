@@ -26,6 +26,14 @@ class InventoryRegistrationResource extends JsonResource
             'accountability_id' => $this->accountability_id,
             'location_id' => $this->location_id,
             'status_id' => $this->status_id,
+
+            'classification' => $this->whenLoaded('classification'),
+            'identification' => $this->whenLoaded('identification'),
+            'description' => $this->whenLoaded('description'),
+            'valuation' => $this->whenLoaded('valuation'),
+            'accountability' => $this->whenLoaded('accountability'),
+            'location' => $this->whenLoaded('location'),
+            'status' => $this->whenLoaded('status'),
         ];
     }
 }

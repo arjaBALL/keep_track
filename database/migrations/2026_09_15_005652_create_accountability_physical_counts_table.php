@@ -12,10 +12,10 @@ return new class extends Migration
     {
         Schema::create('accountability_physical_counts', function (Blueprint $table) {
             $table->id();
-            $table->integer('balance_per_card');
-            $table->integer('on_hand_per_count');
-            $table->integer('responsibility_center_id');
-            $table->integer('accountable_officer_id');
+            $table->integer('balance_per_card')->nullable();
+            $table->integer('on_hand_per_count')->nullable();
+            $table->integer('responsibility_center_id')->nullable();
+            $table->integer('accountable_officer_id')->nullable();
         });
     }
 

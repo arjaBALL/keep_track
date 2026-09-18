@@ -15,10 +15,10 @@ class InventoryRegistrationService
         private readonly InventoryRegistrationRepository $repository,
     ) {}
 
-    public function paginate(int $perPage = 15): LengthAwarePaginator
-    {
-        return $this->repository->paginate($perPage);
-    }
+    public function paginate(int $perPage = 15, array $filters = []): LengthAwarePaginator
+        {
+            return $this->repository->paginate($perPage, $filters);
+        }
 
     public function all(): Collection
     {

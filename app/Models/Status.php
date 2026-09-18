@@ -23,7 +23,7 @@ class Status extends Model
     ];
 
 
-    public function accountabilityStatuses(): HasMany
+     public function accountabilityStatuses(): HasMany
         {
             return $this->hasMany(
                 AccountabilityStatus::class,

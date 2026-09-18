@@ -62,6 +62,11 @@ class InventoryRegistration extends Model
 
     public function location(): BelongsTo
         {
+            return $this->belongsTo(LocationCondition::class, 'location_id');
+        }
+
+    public function locationCondition(): BelongsTo
+        {
             return $this->belongsTo(
                 LocationCondition::class,
                 'location_id'

@@ -12,9 +12,9 @@ return new class extends Migration
     {
         Schema::create('location_conditions', function (Blueprint $table) {
             $table->id();
-            $table->integer('location_id');
-            $table->string('condition_of_ppe');
-            $table->text('remarks');
+            $table->integer('location_id')->nullable();
+            $table->string('condition_of_ppe')->nullable();
+            $table->text('remarks')->nullable();
         });
     }
 

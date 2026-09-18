@@ -12,10 +12,10 @@ return new class extends Migration
     {
         Schema::create('fund_classifications', function (Blueprint $table) {
             $table->id();
-            $table->integer('fund_id');
-            $table->integer('account_id');
-            $table->integer('property_class_id');
-            $table->integer('property_type');
+            $table->integer('fund_id')->nullable();
+            $table->integer('account_id')->nullable();
+            $table->integer('property_class_id')->nullable();
+            $table->integer('property_type')->nullable();
         });
     }
 

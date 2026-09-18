@@ -12,7 +12,7 @@ return new class extends Migration
     {
         Schema::create('account_codes', function (Blueprint $table) {
             $table->id();
-            $table->integer('code');          
+            $table->integer('code')->nullable();          
         });
     }
 

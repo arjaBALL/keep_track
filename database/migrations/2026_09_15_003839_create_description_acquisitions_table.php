@@ -12,10 +12,13 @@ return new class extends Migration
     {
         Schema::create('description_acquisitions', function (Blueprint $table) {
             $table->id();
-            $table->date('acquisition_date');
-            $table->integer('quantity');
-            $table->string('unit');
-            $table->string('description');
+
+            $table->date('acquisition_date')->nullable();
+            $table->integer('quantity')->nullable();
+            $table->string('unit')->nullable();
+            $table->string('description')->nullable();
+
+            $table->timestamps();
         });
     }
 

@@ -12,8 +12,8 @@ return new class extends Migration
     {
         Schema::create('accountability_statuses', function (Blueprint $table) {
             $table->id();
-            $table->integer('status_id');
-            $table->date('are_on');
+            $table->integer('status_id')->nullable();
+            $table->date('are_on')->nullable();
         });
     }
 

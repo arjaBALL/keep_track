@@ -12,13 +12,18 @@ return new class extends Migration
     {
         Schema::create('valuation_depreciations', function (Blueprint $table) {
             $table->id();
-            $table->integer('estimated_life');
-            $table->decimal('unit_value');
-            $table->decimal('salvage_value');
-            $table->decimal('monthly_depreciation');
-            $table->integer('month_id');
-            $table->decimal('accumulated_depreciation');
-            $table->decimal('net_book_value');
+
+            $table->integer('estimated_life')->nullable();       
+            $table->decimal('unit_value', 12, 2)->nullable();
+            $table->decimal('salvage_value', 12, 2)->nullable();
+            $table->decimal('monthly_depreciation', 12, 2)->nullable();
+
+            $table->integer('month')->nullable();
+
+            $table->decimal('accumulated_depreciation', 12, 2)->nullable();
+            $table->decimal('net_book_value', 12, 2)->nullable();
+
+            $table->timestamps();
         });
     }
 

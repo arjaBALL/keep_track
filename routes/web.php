@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\InventoryRegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +22,8 @@ Route::get('/', function () {
     });
 
     //  Requests Trip Ticket
-    Route::get('/request-trip-ticket', function () {
-        return Inertia::render('RequestTripTickets');
-    });
+    Route::get('/request-trip-ticket', [InventoryRegistrationController::class, 'index'])
+    ->name('inventory.index');
 
     // My Tickets
     Route::get('/my-tickets', function () {

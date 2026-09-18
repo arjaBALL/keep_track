@@ -12,11 +12,14 @@ return new class extends Migration
     {
         Schema::create('property_identifications', function (Blueprint $table) {
             $table->id();
-            $table->string('ics_par_no');
-            $table->date('ics_par_date');
-            $table->string('engas_old_property_no');
-            $table->string('old_property_no');
-            $table->string('new_property_no');
+
+            $table->string('ics_par_no')->nullable();
+            $table->date('ics_par_date')->nullable();
+            $table->string('engas_old_property_no')->nullable();
+            $table->string('old_property_no')->nullable();
+            $table->string('new_property_no')->nullable();
+
+            $table->timestamps();
         });
     }
 
